@@ -5,14 +5,9 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 //下载任务
-public class DownloadThread  {
+public class DownloadThread2 {
     private final String address;//下载地址
     private int threadLen;//每个线程下载的数量
     private int threadNum;//线程号
@@ -28,7 +23,7 @@ public class DownloadThread  {
     Boolean isBpDownload =false;
     //threadLen  //每个线程的处理字节的数量
     //threadNum  这是第几号线程
-    public DownloadThread(String address, int threadLen, int threadNum, String md5, String savePath, int start, int end, int contentLength,ProgressListener progressListener) {
+    public DownloadThread2(String address, int threadLen, int threadNum, String md5, String savePath, int start, int end, int contentLength, ProgressListener progressListener) {
         this.address = address;
         this.threadLen = threadLen;
         this.threadNum = threadNum;
@@ -41,7 +36,7 @@ public class DownloadThread  {
         run();
     }
 
-    public DownloadThread(String address, int threadLen, int threadNum, String md5, String savePath, int start, int end, int contentLength) {
+    public DownloadThread2(String address, int threadLen, int threadNum, String md5, String savePath, int start, int end, int contentLength) {
         this.address = address;
         this.threadLen = threadLen;
         this.threadNum = threadNum;
@@ -78,8 +73,6 @@ public class DownloadThread  {
                     int bytesRead;
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
                         output.write(buffer, 0, bytesRead);
-                        String s = progressListener.progress1(bytesRead, threadLen, threadNum, TaskName, totalLength, task, taskMd5);
-                        System.out.print("\r"+s);
                     }
                     output.close();
                     inputStream.close();
@@ -87,5 +80,6 @@ public class DownloadThread  {
                 }
             }
         }.start();
+        new ProgressListener2(totalLength,task,taskMd5);
     }
 }

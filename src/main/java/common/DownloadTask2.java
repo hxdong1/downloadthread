@@ -1,15 +1,11 @@
 package common;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.*;
 
 //下载任务类
-public class DownloadTask {
+public class DownloadTask2 {
     private static int THREAD_COUNT = 8;
     private String address;//下载地址
     private int threadNum;//指定线程数
@@ -19,7 +15,7 @@ public class DownloadTask {
 //    private String AbsolutPath;
 //    private int contentLength;
 
-    public DownloadTask() {
+    public DownloadTask2() {
     }
 
     /*  public void DownloadTask(String address,  int threadNum, String savePath) throws IOException {
@@ -59,8 +55,8 @@ public class DownloadTask {
         new Thread() {
             @Override
             public void run() {
-                String taskName = null;
-                String AbsolutPath = null;
+                /*String taskName = null;
+                String AbsolutPath = null;*/
                 try {
                     URL url = new URL(add);
                     //与目标资源建立连接
@@ -70,9 +66,9 @@ public class DownloadTask {
                     //将资源目标地址进行分割
                     String[] split = add.split("/");
                     //最后一个索引位置即是文件名
-                    taskName = split[split.length - 1];
+                   String taskName = split[split.length - 1];
                     //绝对路径
-                    AbsolutPath = savePath + "/" + taskName;
+                  String  AbsolutPath = savePath + "/" + taskName;
 //                    System.out.println(taskName + "开始下载");
 //                    System.out.println(name+"大小为"+contentLength);
                     //此处可以进行断点续传判断，进到本地查看本地资源
@@ -92,7 +88,6 @@ public class DownloadTask {
                     //update方法中进行加载，将所有的字节分片进行存储，命名规则，任务名+线程号+
                     //listener = new listener(total)
                     //创建一个监听对象，
-                    ProgressListener progressListener = new ProgressListener();
                     //根据需要创建的线程数进行遍历
                     for (int i = 0; i < THREAD_COUNT; i++) {
                         start = i * threadLen;
@@ -103,10 +98,8 @@ public class DownloadTask {
                         else {
                             end = ((i + 1) * threadLen) - 1;
                         }
-                        new DownloadThread(add, threadLen, i, MD51, AbsolutPath, start, end, contentLength, progressListener);
-//                        new DownloadThread(add, threadLen, i, MD51, AbsolutPath, start, end, contentLength);
+                        new DownloadThread2(add, threadLen, i, MD51, AbsolutPath, start, end, contentLength);
                     }
-                    ProgressListener progressListener1 = new ProgressListener(AbsolutPath,contentLength,taskName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -116,7 +109,5 @@ public class DownloadTask {
 //            private void Progress() {
 //            }
         }.start();
-
-
     }
 }
